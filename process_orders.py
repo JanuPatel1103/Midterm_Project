@@ -20,23 +20,23 @@ def process_orders(input_file):
         name = order["name"]
 
         if phone:
-            customers[phone] = name  # Store phone and name
+            customers[phone] = name  
 
         for item in order["items"]:
             item_name = item["name"]
             price = item["price"]
 
-            # ❌ Intentional Mistake: Using incorrect dictionary key (causes KeyError)
             if item_name not in items:
-                items[item_name]["cost"] = price  # Wrong key "cost" instead of "price"
-            items[item_name]["order_count"] += 1  # Wrong key "order_count" instead of "orders"
+                items[item_name]["price"] = price
+            items[item_name]["orders"] += 1
 
-    # ❌ Intentional Mistake: Wrong file mode ("r" instead of "w")
-    with open("customers.json", "r") as cfile:
-        json.dump(customers, cfile, indent=4)  # This will cause an error
+    
+    with open("customers.json", "w") as cfile:
+        json.dump(customers, cfile, indent=4)
 
-    # ❌ Intentional Mistake: Forgetting to open the file before writing
-    json.dump(items, ifile, indent=4)  # "ifile" is not defined, causes NameError
+    
+    with open("items.json", "w") as ifile:
+        json.dump(items, ifile, indent=4)
 
     print("Processing complete. Files 'customers.json' and 'items.json' have been created.")
 
